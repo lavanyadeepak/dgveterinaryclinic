@@ -12,6 +12,7 @@
 <nav>
   <a href="#" class="nav-logo"><span class="nav-dot"></span>DG Veterinary Clinic</a>
   <div class="nav-links">
+    <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="#areas">Service Areas</a>
     <a href="#contact">Contact</a>
@@ -52,6 +53,20 @@
         <div class="hcard-lbl">Specialised In</div>
         <div class="hcard-val" style="font-size:0.95rem;line-height:1.5">Surgery · Cancer Treatment<br/>Gynecology · Nutrition</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="lbl">About Our Clinic</div>
+      <div class="ttl">Decades of Compassionate Care</div>
+      <p class="sub">With over 20 years of experience, DG Veterinary Clinic has been a pillar of animal healthcare in Chennai. Our chief veterinarian leads our team with a passion for animal welfare and a commitment to using the latest medical advancements to treat every pet as if it were his own.</p>
+      <a href="#contact" class="btn-fill" style="margin-top:24px">Request a Service</a>
+    </div>
+    <div class="about-img reveal">
+      <img src="assets/images/dr.jpg" alt="Chief Veterinarian at DG Veterinary Clinic">
     </div>
   </div>
 </section>
@@ -119,7 +134,6 @@
       <div class="chips reveal">
         <span class="chip">Selaiyur</span>
         <span class="chip">Camp Road</span>
-        <span class="chip">Rajalakshmi Nagar</span>
         <span class="chip">Tambaram</span>
         <span class="chip">Irungattukottai</span>
         <span class="chip">East Tambaram</span>
@@ -151,6 +165,7 @@
   <div class="cg">
     <div class="cb reveal">
       <h3>Contact Information</h3>
+      <img src="assets/images/dr1.jpg" alt="DG Veterinary Clinic Interior" class="contact-img">
       <div class="ci">
         <div class="ci-ico">📞</div>
         <div class="ci-body"><strong>Phone</strong><a href="tel:09444342058">94443 42058</a></div>
@@ -171,33 +186,33 @@
         <div class="ci-ico">📍</div>
         <div class="ci-body">
           <strong>Address</strong>
-          <span>No. 1/25, Varadharami Street,<br/>Rajalakshmi Nagar, Camp Road,<br/>Selaiyur, Chennai – 600 073</span>
+          <span>No. 1/25, Varalakshmi  Street,<br/> Camp Road,<br/>Selaiyur, Chennai – 600 073</span>
         </div>
       </div>
     </div>
-    <div class="cf reveal">
+    <form class="cf reveal" id="contactForm">
       <h3>Request a Service</h3>
       <div class="fr">
-        <input type="text" placeholder="Your Name"/>
-        <input type="tel" placeholder="Mobile Number"/>
+        <input type="text" id="name" placeholder="Your Name" required/>
+        <input type="tel" id="phone" placeholder="Mobile Number" required/>
       </div>
       <div class="fr">
-        <input type="email" placeholder="Email (optional)"/>
-        <select>
+        <input type="email" id="email" placeholder="Email (optional)"/>
+        <select id="service" required>
           <option value="">Select Service</option>
-          <option>General Consultation</option>
-          <option>Surgical Services</option>
-          <option>Breast Cancer Treatment</option>
-          <option>Gynecology</option>
-          <option>Dog Food &amp; Nutrition</option>
-          <option>Emergency</option>
+          <option value="General Consultation">General Consultation</option>
+          <option value="Surgical Services">Surgical Services</option>
+          <option value="Breast Cancer Treatment">Breast Cancer Treatment</option>
+          <option value="Gynecology">Gynecology</option>
+          <option value="Dog Food & Nutrition">Dog Food &amp; Nutrition</option>
+          <option value="Emergency">Emergency</option>
         </select>
       </div>
       <div class="fr full">
-        <textarea placeholder="Describe your pet's condition or requirement…"></textarea>
+        <textarea id="message" placeholder="Describe your pet's condition or requirement…" required></textarea>
       </div>
-      <button class="sbtn">Send Request →</button>
-    </div>
+      <button type="submit" class="sbtn">Send Request →</button>
+    </form>
   </div>
 </section>
 
@@ -210,6 +225,7 @@
     <div>
       <h4>Quick Links</h4>
       <ul>
+        <li><a href="#about">About Us</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#areas">Service Areas</a></li>
         <li><a href="#contact">Contact Us</a></li>
@@ -238,6 +254,31 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
 },{threshold:0.12});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const service = document.getElementById('service').value;
+  const message = document.getElementById('message').value.trim();
+
+  let waMessage = `*New Service Request from Website*\n\n`;
+  waMessage += `*Name:* ${name}\n`;
+  waMessage += `*Phone:* ${phone}\n`;
+  if (email) {
+    waMessage += `*Email:* ${email}\n`;
+  }
+  waMessage += `*Service:* ${service}\n`;
+  waMessage += `*Message:* ${message}`;
+
+  const whatsappNumber = "919444342058";
+  const encodedMessage = encodeURIComponent(waMessage);
+  const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+  window.open(url, '_blank');
+});
 </script>
 </body>
 </html>
